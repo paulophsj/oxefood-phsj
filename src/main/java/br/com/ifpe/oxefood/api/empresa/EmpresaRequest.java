@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class EmpresaRequest {
     private String site;
-    private String cpnj;
+    private String cnpj;
     private String inscricaoEstadual;
     private String nomeEmpresarial;
     private String nomeFantasia;
@@ -22,7 +22,7 @@ public class EmpresaRequest {
     public Empresa build(){
         return Empresa.builder()
         .site(site)
-        .cnpj(cpnj)
+        .cnpj(cnpj)
         .inscricaoEstadual(inscricaoEstadual)
         .nomeEmpresarial(nomeEmpresarial)
         .nomeFantasia(nomeFantasia)

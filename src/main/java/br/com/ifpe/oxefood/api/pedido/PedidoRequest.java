@@ -39,7 +39,7 @@ public class PedidoRequest {
 
     private String enderecoEntregaComplemento;
 
-    public Pedido toPedido() {
+    public Pedido build() {
         return Pedido.builder()
                 .dataHora(dataHora)
                 .valorTotal(valorTotal)

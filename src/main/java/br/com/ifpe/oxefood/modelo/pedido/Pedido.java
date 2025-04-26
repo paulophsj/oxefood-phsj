@@ -14,11 +14,11 @@ import lombok.Setter;
 
 @Entity
 @Table(name="pedido")
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Pedido extends EntidadeAuditavel {
     @Column
     private LocalDateTime dataHora;

@@ -20,9 +20,9 @@ public class PedidoController {
     @Autowired
     private PedidoService pedidoService;
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<Pedido> save(@RequestBody PedidoRequest request) {
-        Pedido pedido = pedidoService.save(request.builder());
+        Pedido pedido = pedidoService.save(request.build());
         return new ResponseEntity<Pedido>(pedido, HttpStatus.CREATED);
     }
     
