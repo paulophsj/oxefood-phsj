@@ -1,5 +1,7 @@
 package br.com.ifpe.oxefood.modelo.cliente;
 
+import java.util.List;
+
 import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,5 +18,11 @@ public class ClienteService {
 
        cliente.setHabilitado(Boolean.TRUE);
        return repository.save(cliente);
+   }
+   public List<Cliente> listarTodos() {
+       return repository.findAll();
+   }
+   public Cliente obterPorId(Long id){
+    return repository.findById(id).get();
    }
 }
