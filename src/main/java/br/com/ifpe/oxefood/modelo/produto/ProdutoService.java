@@ -25,7 +25,7 @@ public class ProdutoService {
     }
     @Transactional
     public Produto update(Long id, Produto novoProduto){
-        Produto produto = repository.findById(id).get();
+        Produto produto = this.obterPorId(id);
 
         produto.setCodigo(novoProduto.getCodigo());
         produto.setTitulo(novoProduto.getTitulo());
@@ -35,5 +35,11 @@ public class ProdutoService {
         produto.setTempoEntregaMinimo(novoProduto.getTempoEntregaMinimo());
 
         return repository.save(produto);
+    }
+    @Transactional
+    public void delete(Long id){
+        Produto produto = this.obterPorId(id);
+        produto.setHabilitado(false);
+        repository.save(produto);
     }
 }

@@ -26,7 +26,7 @@ public class EntregadorService {
     }
     @Transactional
     public Entregador update(Long id, Entregador entregadorAlterado){
-        Entregador entregador = entregadorRepository.findById(id).get();
+        Entregador entregador = this.findById(id);
         entregador.setNome(entregadorAlterado.getNome());
         entregador.setCpf(entregadorAlterado.getCpf());
         entregador.setRg(entregadorAlterado.getRg());
@@ -45,5 +45,11 @@ public class EntregadorService {
         entregador.setAtivo(entregadorAlterado.getAtivo());
         
         return entregadorRepository.save(entregador);
+    }
+    @Transactional
+    public void delete(Long id){
+        Entregador entregador = this.findById(id);
+        entregador.setHabilitado(Boolean.FALSE);
+        entregadorRepository.save(entregador);
     }
 }
