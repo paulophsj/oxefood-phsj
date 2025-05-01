@@ -16,6 +16,8 @@ import br.com.ifpe.oxefood.modelo.cliente.ClienteService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @RequestMapping("/api/cliente")
@@ -38,6 +40,11 @@ public class ClienteController {
     @GetMapping("/{id}")
     public Cliente obterPorId(@PathVariable Long id) {
         return clienteService.obterPorId(id);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Cliente> update(@PathVariable("id") Long id, @RequestBody ClienteRequest request) {
+        Cliente cliente = clienteService.update(id, request.build());
+        return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
     }
     
 }

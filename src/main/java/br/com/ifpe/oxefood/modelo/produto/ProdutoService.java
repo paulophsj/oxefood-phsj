@@ -23,4 +23,17 @@ public class ProdutoService {
     public Produto obterPorId(Long id){
         return repository.findById(id).get();
     }
+    @Transactional
+    public Produto update(Long id, Produto novoProduto){
+        Produto produto = repository.findById(id).get();
+
+        produto.setCodigo(novoProduto.getCodigo());
+        produto.setTitulo(novoProduto.getTitulo());
+        produto.setDescricao(novoProduto.getDescricao());
+        produto.setValorUnitario(novoProduto.getValorUnitario());
+        produto.setTempoEntregaMaximo(novoProduto.getTempoEntregaMaximo());
+        produto.setTempoEntregaMinimo(novoProduto.getTempoEntregaMinimo());
+
+        return repository.save(produto);
+    }
 }

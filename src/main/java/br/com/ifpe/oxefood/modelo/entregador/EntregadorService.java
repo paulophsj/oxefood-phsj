@@ -15,6 +15,7 @@ public class EntregadorService {
     @Transactional
     public Entregador save(Entregador entregador){
         entregador.setHabilitado(Boolean.TRUE);
+        entregador.setAtivo(Boolean.TRUE);
         return entregadorRepository.save(entregador);
     }
     public List<Entregador> findAll(){
@@ -22,5 +23,27 @@ public class EntregadorService {
     }
     public Entregador findById(Long id){
         return entregadorRepository.findById(id).get();
+    }
+    @Transactional
+    public Entregador update(Long id, Entregador entregadorAlterado){
+        Entregador entregador = entregadorRepository.findById(id).get();
+        entregador.setNome(entregadorAlterado.getNome());
+        entregador.setCpf(entregadorAlterado.getCpf());
+        entregador.setRg(entregadorAlterado.getRg());
+        entregador.setDataNascimento(entregadorAlterado.getDataNascimento());
+        entregador.setFoneCelular(entregadorAlterado.getFoneCelular());
+        entregador.setFoneFixo(entregadorAlterado.getFoneFixo());
+        entregador.setQtdEntregasRealizadas(entregadorAlterado.getQtdEntregasRealizadas());
+        entregador.setValorFrete(entregadorAlterado.getValorFrete());
+        entregador.setEnderecoRua(entregadorAlterado.getEnderecoRua());
+        entregador.setEnderecoCompleto(entregadorAlterado.getEnderecoCompleto());
+        entregador.setEnderecoNumero(entregadorAlterado.getEnderecoNumero());
+        entregador.setEnderecoBairro(entregadorAlterado.getEnderecoBairro());
+        entregador.setEnderecoCidade(entregadorAlterado.getEnderecoCidade());
+        entregador.setEnderecoCep(entregadorAlterado.getEnderecoCep());
+        entregador.setEnderecoUf(entregadorAlterado.getEnderecoUf());
+        entregador.setAtivo(entregadorAlterado.getAtivo());
+        
+        return entregadorRepository.save(entregador);
     }
 }
