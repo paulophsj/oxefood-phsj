@@ -47,7 +47,7 @@ public class EntregadorController {
         return new ResponseEntity<Entregador>(entregador, HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
 
         entregadorService.delete(id);
         return ResponseEntity.ok().build();
