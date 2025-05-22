@@ -27,6 +27,7 @@ public class ProdutoService {
     public Produto update(Long id, Produto novoProduto){
         Produto produto = this.obterPorId(id);
 
+        produto.setCategoria(novoProduto.getCategoria());
         produto.setCodigo(novoProduto.getCodigo());
         produto.setTitulo(novoProduto.getTitulo());
         produto.setDescricao(novoProduto.getDescricao());

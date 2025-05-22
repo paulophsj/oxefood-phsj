@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.ifpe.oxefood.modelo.categoria_produto.CategoriaProdutoService;
 import br.com.ifpe.oxefood.modelo.produto.Produto;
 import br.com.ifpe.oxefood.modelo.produto.ProdutoService;
 
@@ -25,10 +26,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
+    @Autowired
+   private CategoriaProdutoService categoriaProdutoService;
+
 
     @PostMapping
     public ResponseEntity<Produto> save(@RequestBody ProdutoRequest request){
-        Produto produto = produtoService.save(request.build());
+        Produto produto = request.build();
+        produto.setCategoria(categoriaProdutoService.findOne(request.getIdCategoria()));
+        produtoService.save(produto);
         return new ResponseEntity<Produto>(produto, HttpStatus.CREATED);
     }
     @GetMapping
@@ -46,7 +52,9 @@ public class ProdutoController {
     }
     @PutMapping("/{id}")
     public ResponseEntity<Produto> update(@PathVariable("id") Long id, @RequestBody ProdutoRequest request){
-        Produto produto = produtoService.update(id, request.build());
+        Produto produto = request.build();
+        produto.setCategoria(categoriaProdutoService.findOne(request.getIdCategoria()));
+        produtoService.save(produto);
         return new ResponseEntity<Produto>(produto, HttpStatus.OK);
     }
     
