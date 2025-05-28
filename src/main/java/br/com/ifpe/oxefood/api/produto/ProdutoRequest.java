@@ -19,7 +19,7 @@ public class ProdutoRequest {
 
     private String descricao;
 
-    private String valorUnitario;
+    private int valorUnitario;
 
     private String tempoEntregaMinimo;
 

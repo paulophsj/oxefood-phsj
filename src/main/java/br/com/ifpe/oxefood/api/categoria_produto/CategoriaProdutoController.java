@@ -32,6 +32,11 @@ public class CategoriaProdutoController {
         List<CategoriaProduto> categorias = service.findAll(); 
         return new ResponseEntity<List<CategoriaProduto>>(categorias, HttpStatus.OK);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<CategoriaProduto> findOne(@PathVariable("id") Long id) {
+        CategoriaProduto categoria = service.findOne(id);
+        return new ResponseEntity<CategoriaProduto>(categoria, HttpStatus.OK);
+    }
     @PostMapping
     public ResponseEntity<CategoriaProduto> save(@RequestBody CategoriaProdutoRequest request) {
         CategoriaProduto categoria = service.save(request.build());
