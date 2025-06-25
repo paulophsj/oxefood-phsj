@@ -1,6 +1,7 @@
 package br.com.ifpe.oxefood.api.cliente;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
@@ -15,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import main.java.br.com.ifpe.oxefood.modelo.acesso.Usuario;
 
 @Data
 @Builder
@@ -24,29 +26,44 @@ public class ClienteRequest {
     @NotNull(message = "O nome do cliente é obrigatório")
     @NotEmpty(message = "O nome do cliente não pode ser vazio")
     @Length(max = 100, message = "O nome do cliente deve ter no máximo 100 caracteres")
-   private String nome;
+    private String nome;
 
-   @JsonFormat(pattern = "dd/MM/yyyy")
-   private LocalDate dataNascimento;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate dataNascimento;
 
-   @CPF
-   @NotBlank(message = "O CPF do cliente é obrigatório")
-   private String cpf;
+    @CPF
+    @NotBlank(message = "O CPF do cliente é obrigatório")
+    private String cpf;
 
-   @Length(min = 8, max = 20, message = "O campo Fone tem que ter entre {min} e {max} caracteres")
-   private String foneCelular;
+    @Length(min = 8, max = 20, message = "O campo Fone tem que ter entre {min} e {max} caracteres")
+    private String foneCelular;
 
-   private String foneFixo;
+    private String foneFixo;
+    @NotBlank(message = "O e-mail é de preenchimento obrigatório")
+    @Email
+    private String email;
 
-   public Cliente build() {
+    @NotBlank(message = "A senha é de preenchimento obrigatório")
+    private String password;
 
-       return Cliente.builder()
-           .nome(nome)
-           .dataNascimento(dataNascimento)
-           .cpf(cpf)
-           .foneCelular(foneCelular)
-           .foneFixo(foneFixo)
-           .build();
-   }
+    public Usuario buildUsuario() {
+        return Usuario.builder()
+                .username(email)
+                .password(password)
+                .roles(Arrays.asList(new Perfil(Perfil.ROLE_CLIENTE)))
+                .build();
+    }
+
+    public Cliente build() {
+
+        return Cliente.builder()
+                .nome(nome)
+                .dataNascimento(dataNascimento)
+                .cpf(cpf)
+                .usuario(buildUsuario())
+                .foneCelular(foneCelular)
+                .foneFixo(foneFixo)
+                .build();
+    }
 
 }

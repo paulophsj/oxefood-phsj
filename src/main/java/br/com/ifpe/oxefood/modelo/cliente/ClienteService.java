@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.transaction.Transactional;
+import main.java.br.com.ifpe.oxefood.modelo.acesso.PerfilRepository;
+import main.java.br.com.ifpe.oxefood.modelo.acesso.UsuarioService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,12 @@ public class ClienteService {
     @Autowired
     enderecoClienteRepository enderecoClienteRepository;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @Autowired
+    private PerfilRepository perfilUsuarioRepository;
+
     @Transactional
     public Cliente save(Cliente cliente) {
         String foneSeparado[] = cliente.getFoneCelular().split(" ");
@@ -28,9 +36,16 @@ public class ClienteService {
         if (!foneSeparado[0].equals("(81)")) {
             throw new ClienteException(ClienteException.DEVE_TER_DDD_81);
         }
+        usuarioService.save(cliente.getUsuario());
+
+        for (Perfil perfil : cliente.getUsuario().getRoles()) {
+            perfil.setHabilitado(Boolean.TRUE);
+            perfilUsuarioRepository.save(perfil);
+        }
+
         cliente.setHabilitado(Boolean.TRUE);
         return repository.save(cliente);
-        
+
     }
 
     public List<Cliente> listarTodos() {
