@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.transaction.Transactional;
-import main.java.br.com.ifpe.oxefood.modelo.acesso.PerfilRepository;
-import main.java.br.com.ifpe.oxefood.modelo.acesso.UsuarioService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ifpe.oxefood.modelo.acesso.Perfil;
+import br.com.ifpe.oxefood.modelo.acesso.PerfilRepository;
+import br.com.ifpe.oxefood.modelo.acesso.UsuarioService;
 import br.com.ifpe.oxefood.modelo.endereco_cliente.enderecoCliente;
 import br.com.ifpe.oxefood.modelo.endereco_cliente.enderecoClienteRepository;
 import br.com.ifpe.oxefood.util.exception.ClienteException;

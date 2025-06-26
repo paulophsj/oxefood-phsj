@@ -4,34 +4,44 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import br.com.ifpe.oxefood.modelo.acesso.Usuario;
 import br.com.ifpe.oxefood.modelo.funcionario.Funcionario;
+import br.com.ifpe.oxefood.modelo.funcionario.TipoFuncionario;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+@Data
 @Builder
-@Getter
-@Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class FuncionarioRequest {
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private TipoFuncionario tipo;
+
+    @NotBlank
     private String nome;
-    
+
     private String cpf;
-    
+
     private String rg;
 
-    @JsonFormat(pattern="dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
 
     private String foneCelular;
 
     private String foneFixo;
-    
+
     private Double salario;
-    
+
     private String enderecoRua;
 
     private String enderecoNumero;
@@ -44,24 +54,43 @@ public class FuncionarioRequest {
 
     private String enderecoUf;
 
-    private String enderecoCompleto;
+    private String enderecoComplemento;
 
-    public Funcionario build(){
+    @NotBlank
+    private String email;
+
+    @NotBlank
+    private String password;
+
+    public Funcionario build() {
+
         return Funcionario.builder()
-        .nome(nome)
-        .cpf(cpf)
-        .rg(rg)
-        .dataNascimento(dataNascimento)
-        .foneCelular(foneCelular)
-        .foneFixo(foneFixo)
-        .salario(salario)
-        .enderecoRua(enderecoRua)
-        .enderecoNumero(enderecoNumero)
-        .enderecoBairro(enderecoBairro)
-        .enderecoCidade(enderecoCidade)
-        .enderecoCep(enderecoCep)
-        .enderecoUf(enderecoUf)
-        .enderecoCompleto(enderecoCompleto)
-        .build();
+                .usuario(buildUsuario())
+                .tipo(tipo)
+                .nome(nome)
+                .cpf(cpf)
+                .rg(rg)
+                .dataNascimento(dataNascimento)
+                .foneCelular(foneCelular)
+                .foneFixo(foneFixo)
+                .salario(salario)
+                .enderecoRua(enderecoRua)
+                .enderecoNumero(enderecoNumero)
+                .enderecoBairro(enderecoBairro)
+                .enderecoCidade(enderecoCidade)
+                .enderecoCep(enderecoCep)
+                .enderecoUf(enderecoUf)
+                .enderecoComplemento(enderecoComplemento)
+                .build();
     }
+
+        public Usuario buildUsuario() {
+
+        return Usuario.builder()
+                .username(email)
+                .password(password)
+                .build();
+    }
+
+
 }
