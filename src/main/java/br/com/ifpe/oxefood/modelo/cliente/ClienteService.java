@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.ifpe.oxefood.modelo.acesso.Perfil;
 import br.com.ifpe.oxefood.modelo.acesso.PerfilRepository;
+import br.com.ifpe.oxefood.modelo.acesso.Usuario;
 import br.com.ifpe.oxefood.modelo.acesso.UsuarioService;
 import br.com.ifpe.oxefood.modelo.endereco_cliente.enderecoCliente;
 import br.com.ifpe.oxefood.modelo.endereco_cliente.enderecoClienteRepository;
@@ -30,7 +31,7 @@ public class ClienteService {
     private PerfilRepository perfilUsuarioRepository;
 
     @Transactional
-    public Cliente save(Cliente cliente) {
+    public Cliente save(Cliente cliente, Usuario usuarioLogado) {
         String foneSeparado[] = cliente.getFoneCelular().split(" ");
 
         if (!foneSeparado[0].equals("(81)")) {
@@ -44,6 +45,7 @@ public class ClienteService {
         }
 
         cliente.setHabilitado(Boolean.TRUE);
+        cliente.setCriadoPor(usuarioLogado);
         return repository.save(cliente);
 
     }
@@ -57,7 +59,7 @@ public class ClienteService {
     }
 
     @Transactional
-    public Cliente update(Long id, Cliente clienteAlterado) {
+    public Cliente update(Long id, Cliente clienteAlterado, Usuario usuarioLogado) {
 
         Cliente cliente = this.obterPorId(id);
         cliente.setNome(clienteAlterado.getNome());
@@ -66,6 +68,8 @@ public class ClienteService {
         cliente.setFoneCelular(clienteAlterado.getFoneCelular());
         cliente.setFoneFixo(clienteAlterado.getFoneFixo());
 
+        cliente.setUltimaModificacaoPor(usuarioLogado);
+        
         return repository.save(cliente);
     }
 
